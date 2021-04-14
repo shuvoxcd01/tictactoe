@@ -64,8 +64,21 @@ class TicTacToeEnv(gym.Env):
         self.state = np.zeros(shape=(9,))
         self.player_to_move = self.human_player
 
+        observation = copy.deepcopy(self.state)
+
+        return observation
+
     def render(self, mode='ansi'):
-        super(TicTacToeEnv, self).render()
+        if mode != 'ansi':
+            super(TicTacToeEnv, self).render()
+
+        board = ""
+        for i in range(self.num_moves):
+            board += ".X0"[int(self.state[i])]
+            if i % 3 == 2:
+                board += "\n"
+
+        return board
 
     def is_game_over(self):
         for (x, y, z) in [(0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6)]:
