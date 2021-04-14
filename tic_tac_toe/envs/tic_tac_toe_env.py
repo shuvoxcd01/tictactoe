@@ -13,13 +13,13 @@ class TicTacToeEnv(gym.Env):
     def __init__(self):
         super(TicTacToeEnv, self).__init__()
         self.action_space = spaces.Discrete(9)
-        self.observation_space = spaces.Box(low=-1, high=1, shape=9, dtype=np.int32)
+        self.observation_space = spaces.Box(low=-1, high=1, shape=(9,), dtype=np.int32)
         self.num_moves = 9
 
         self.human_player = True
         self.ai_player = False
 
-        self.state = np.zeros(shape=9)
+        self.state = np.zeros(shape=(9,))
         self.player_to_move = self.human_player
 
         self.ai_engine = MiniMax()
@@ -61,7 +61,7 @@ class TicTacToeEnv(gym.Env):
         return observation, reward, done, info
 
     def reset(self):
-        self.state = np.zeros(shape=9)
+        self.state = np.zeros(shape=(9,))
         self.player_to_move = self.human_player
 
     def render(self, mode='ansi'):
