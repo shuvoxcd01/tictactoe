@@ -3,6 +3,7 @@ A tictactoe environment to use with OpenAI gym. It is powered by MiniMax search 
 
 ## Installation (Local)
 Clone/(download and unarchive) the repo. From the parent directory, type the following line in the terminal.
+
 pip install -e tictactoe
 
 ## Usage
