@@ -26,7 +26,7 @@ class MiniMax:
         return best_action
 
     def get_max_value(self, env):
-        assert env.player_to_move
+        assert env.player_to_move == self.max_player
 
         if env.get_state_as_key() in self.memory:
             return self.memory[env.get_state_as_key()][1]
@@ -46,7 +46,7 @@ class MiniMax:
         return value
 
     def get_min_value(self, env):
-        assert not env.player_to_move
+        assert env.player_to_move != self.max_player
 
         if env.get_state_as_key() in self.memory:
             return self.memory[env.get_state_as_key()][1]
