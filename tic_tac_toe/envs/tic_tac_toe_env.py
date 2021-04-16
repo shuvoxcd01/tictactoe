@@ -128,7 +128,7 @@ class TicTacToeEnv(gym.Env):
         for (x, y, z) in [(0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6)]:
             if self.state[x] == self.state[y] == self.state[z] != 0:
                 if self.state[x] == player:
-                    return 1.0
+                    return 10.0
                 else:
-                    return -1.0
+                    return -10.0
         return 0.0
