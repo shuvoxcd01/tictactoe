@@ -21,14 +21,27 @@ class TicTacToeBaseEnv(gym.Env):
         self.state = np.zeros(shape=(9,))
         self.player_to_move = self.human_player
 
+        self.max_step_per_episode = 20
+        self.num_step = 0
+
     def __call__(self):
         return copy.deepcopy(self)
 
     @abstractmethod
-    def step(self, action):
+    def _step(self, action):
         raise NotImplementedError()
 
+    def step(self, action):
+        observation, reward, done, info = self._step(action)
+        self.num_step += 1
+
+        if self.num_step > self.max_step_per_episode:
+            done = True
+
+        return observation, reward, done, info
+
     def reset(self):
+        self.num_step = 0
         self.state = np.zeros(shape=(9,))
         self.player_to_move = self.human_player
 

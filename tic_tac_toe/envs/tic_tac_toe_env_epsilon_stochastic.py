@@ -11,7 +11,7 @@ class TicTacToeEnvEpsilonStochastic(TicTacToeBaseEnv):
         self.epsilon = 0.7
         self.ai_engine = MiniMax()
 
-    def step(self, action):
+    def _step(self, action):
         assert action in range(self.num_moves)
 
         if self.state[action] != 0:

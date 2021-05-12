@@ -9,7 +9,7 @@ class TicTacToeEnv(TicTacToeBaseEnv):
         super(TicTacToeEnv, self).__init__()
         self.ai_engine = MiniMax()
 
-    def step(self, action):
+    def _step(self, action):
         assert action in range(self.num_moves)
 
         if self.state[action] != 0:

@@ -8,7 +8,7 @@ class TicTacToeEnvStochastic(TicTacToeBaseEnv):
     def __init__(self):
         super(TicTacToeEnvStochastic, self).__init__()
 
-    def step(self, action):
+    def _step(self, action):
         assert action in range(self.num_moves)
 
         if self.state[action] != 0:
