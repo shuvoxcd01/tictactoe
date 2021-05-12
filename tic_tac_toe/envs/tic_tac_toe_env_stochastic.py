@@ -45,11 +45,7 @@ class TicTacToeEnvStochastic(gym.Env):
         computer_move = None
 
         if not self.is_game_over():
-            if random.random() < 0.7:
-                computer_move = self.ai_engine.search(self())
-            else:
-                computer_move = random.choice(self.get_legal_moves())
-
+            computer_move = random.choice(self.get_legal_moves())
             self.make_move(computer_move)
 
             if not self.is_game_over():
