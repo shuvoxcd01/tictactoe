@@ -8,14 +8,15 @@ from gym import spaces
 from tic_tac_toe.ai_agents.minimax_agent.minimax import MiniMax
 
 
-class TicTacToeEnvStochastic(gym.Env):
+class TicTacToeEnvEpsilonStochastic(gym.Env):
     metadata = {'render.modes': ['ansi']}
 
     def __init__(self):
-        super(TicTacToeEnvStochastic, self).__init__()
+        super(TicTacToeEnvEpsilonStochastic, self).__init__()
         self.action_space = spaces.Discrete(9)
         self.observation_space = spaces.Box(low=-1, high=1, shape=(9,), dtype=np.int32)
         self.num_moves = 9
+        self.epsilon = 0.7
 
         self.human_player = True
         self.ai_player = False
@@ -45,7 +46,11 @@ class TicTacToeEnvStochastic(gym.Env):
         computer_move = None
 
         if not self.is_game_over():
-            computer_move = random.choice(self.get_legal_moves())
+            if random.random() < self.epsilon:
+                computer_move = self.ai_engine.search(self())
+            else:
+                computer_move = random.choice(self.get_legal_moves())
+
             self.make_move(computer_move)
 
             if not self.is_game_over():
@@ -72,7 +77,7 @@ class TicTacToeEnvStochastic(gym.Env):
 
     def render(self, mode='ansi'):
         if mode != 'ansi':
-            super(TicTacToeEnvStochastic, self).render()
+            super(TicTacToeEnvEpsilonStochastic, self).render()
 
         board = ""
         for i in range(self.num_moves):
