@@ -1,4 +1,6 @@
 import copy
+import random
+import logging
 from abc import abstractmethod
 
 import gym
@@ -18,14 +20,31 @@ class TicTacToeBaseEnv(gym.Env):
         self.human_player = True
         self.ai_player = False
 
+        self.player_to_move_first = self.human_player
+        self.player_to_move = self.player_to_move_first
+
         self.state = np.zeros(shape=(9,))
-        self.player_to_move = self.human_player
 
         self.max_step_per_episode = 20
         self.num_step = 0
 
     def __call__(self):
         return copy.deepcopy(self)
+
+    def set_player_to_move_first(self, player):
+        if player == "you" or player == "computer":
+            self.player_to_move_first = self.ai_player
+            logging.info("Computer will make the first move.")
+        elif player == "me" or player == "human":
+            self.player_to_move_first = self.human_player
+            logging.info("Human player will make the first move.")
+        elif player == "random":
+            self.player_to_move_first = "random"
+            logging.info("The player to make the first move will be random.")
+        else:
+            raise ValueError
+
+        self.reset()
 
     @abstractmethod
     def _step(self, action):
@@ -43,7 +62,14 @@ class TicTacToeBaseEnv(gym.Env):
     def reset(self):
         self.num_step = 0
         self.state = np.zeros(shape=(9,))
-        self.player_to_move = self.human_player
+        self.player_to_move = self.player_to_move_first
+
+        if self.player_to_move_first == "random":
+            self.player_to_move = random.choice([self.human_player, self.ai_player])
+
+        if self.player_to_move == self.ai_player:
+            first_move = random.choice(self.get_legal_moves())
+            self.make_move(first_move)
 
         observation = copy.deepcopy(self.state)
 
