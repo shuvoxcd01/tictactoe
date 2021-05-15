@@ -4,9 +4,9 @@ from tic_tac_toe.ai_agents.minimax_agent.minimax import MiniMax
 from tic_tac_toe.envs.tic_tac_toe_base_env import TicTacToeBaseEnv
 
 
-class TicTacToeEnv(TicTacToeBaseEnv):
+class TicTacToeEnvMiniMax(TicTacToeBaseEnv):
     def __init__(self):
-        super(TicTacToeEnv, self).__init__()
+        super(TicTacToeEnvMiniMax, self).__init__()
         self.ai_engine = MiniMax()
 
     def _step(self, action):
