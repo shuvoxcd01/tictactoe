@@ -114,7 +114,7 @@ class TicTacToeBaseEnv(gym.Env):
         for i in range(self.num_moves):
             str_repr += ["0", "1", "-1"][int(self.state[i])]
 
-        key = (str_repr, self.player_to_move)
+        key = str_repr + str(int(self.player_to_move))
         return key
 
     def make_move(self, move):
