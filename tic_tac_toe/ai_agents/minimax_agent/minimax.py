@@ -2,6 +2,7 @@ import json
 import os
 
 from tic_tac_toe.ai_agents.minimax_agent import memory_file_path
+from tic_tac_toe.envs.tic_tac_toe_base_env import TicTacToeBaseEnv
 
 
 class MiniMax:
@@ -9,15 +10,28 @@ class MiniMax:
         self.memory = self.get_or_create_memory()
         self.max_player = None
 
-    @staticmethod
-    def get_or_create_memory():
-        memory = {}
+    def get_or_create_memory(self):
+        if not os.path.exists(memory_file_path):
+            self.create_memory()
 
-        if os.path.exists(memory_file_path):
-            with open(memory_file_path, "r") as memory_file:
-                memory = json.load(fp=memory_file)
+        with open(memory_file_path, "r") as memory_file:
+            memory = json.load(fp=memory_file)
 
         return memory
+
+    def create_memory(self):
+        env = TicTacToeBaseEnv()
+        self.memory = {}
+
+        assert env.get_state_as_key() == ('0000000001')
+        self.search(env=env())
+
+        env.player_to_move = False
+        assert env.get_state_as_key() == ('0000000000')
+        self.search(env=env())
+
+        with open(memory_file_path, "w") as memory_file:
+            json.dump(obj=self.memory, fp=memory_file)
 
     def search(self, env):
         if env.get_state_as_key() in self.memory:
