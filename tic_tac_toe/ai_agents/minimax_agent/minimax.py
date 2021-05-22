@@ -1,7 +1,23 @@
+import json
+import os
+
+from tic_tac_toe.ai_agents.minimax_agent import memory_file_path
+
+
 class MiniMax:
     def __init__(self):
-        self.memory = {}
+        self.memory = self.get_or_create_memory()
         self.max_player = None
+
+    @staticmethod
+    def get_or_create_memory():
+        memory = {}
+
+        if os.path.exists(memory_file_path):
+            with open(memory_file_path, "r") as memory_file:
+                memory = json.load(fp=memory_file)
+
+        return memory
 
     def search(self, env):
         if env.get_state_as_key() in self.memory:
@@ -21,7 +37,7 @@ class MiniMax:
         best_value = max(min_values)
         best_action = actions[min_values.index(best_value)]
 
-        self.memory[env.get_state_as_key()] = (best_action, best_value)
+        self.memory[env.get_state_as_key()] = (int(best_action), float(best_value))
 
         return best_action
 
@@ -41,7 +57,7 @@ class MiniMax:
 
             if new_value > value:
                 value = new_value
-                self.memory[env.get_state_as_key()] = (action, value)
+                self.memory[env.get_state_as_key()] = (int(action), float(value))
 
         return value
 
@@ -61,6 +77,6 @@ class MiniMax:
 
             if new_value < value:
                 value = new_value
-                self.memory[env.get_state_as_key()] = (action, value)
+                self.memory[env.get_state_as_key()] = (int(action), float(value))
 
         return value
