@@ -95,16 +95,16 @@ class TicTacToeBaseEnv(gym.Env):
         return np.all(self.state)
 
     def get_legal_moves_mask(self):
-        moves = np.zeros(shape=self.num_moves)
+        mask = np.zeros(shape=self.num_moves)
 
         if self.is_game_over():
-            return moves
+            return mask
 
         for i in range(self.num_moves):
             if self.state[i] == 0:
-                moves[i] = 1
+                mask[i] = 1
 
-        return moves
+        return mask
 
     def get_legal_moves(self):
         return np.nonzero(self.get_legal_moves_mask())[0]
