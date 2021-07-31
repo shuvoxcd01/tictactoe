@@ -1,6 +1,11 @@
 from gym.envs.registration import register
 
 register(
+    id='tic_tac_toe-v0',
+    entry_point='tic_tac_toe.envs:TicTacToeEnvStochastic'
+)
+
+register(
     id='tic_tac_toe-minimax-v0',
     entry_point='tic_tac_toe.envs:TicTacToeEnvMiniMax'
 )
@@ -13,4 +18,9 @@ register(
 register(
     id='tic_tac_toe-stochastic-v0',
     entry_point='tic_tac_toe.envs:TicTacToeEnvStochastic'
+)
+
+register(
+    id='tic_tac_toe-dqn-v0',
+    entry_point='tic_tac_toe.envs:TicTacToeEnvDQN'
 )
