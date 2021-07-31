@@ -28,7 +28,7 @@ class TicTacToeEnvEpsilonStochastic(TicTacToeBaseEnv):
         computer_move = None
 
         if not self.is_game_over():
-            if random.random() < self.epsilon:
+            if random.random() <= self.epsilon:
                 computer_move = self.ai_engine.search(self())
             else:
                 computer_move = random.choice(self.get_legal_moves())
